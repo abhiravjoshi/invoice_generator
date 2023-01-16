@@ -50,4 +50,26 @@ for filepath in file_list:
                 pdf.cell(w=widths[i], h=8,
                          txt=str(row[column_list[i]]), border=1)
 
+    # set total price row with sum of total_price
+    for i in range(len(column_list)-1):
+        pdf.cell(w=widths[i], h=8, txt='', border=1)
+    x = df['total_price'].sum()
+    pdf.cell(w=widths[i], h=8, txt=str(x), border=1, ln=1)
+    pdf.ln(30)
+
+    # do the totals summary at the end
+    pdf.set_font(family='Times', size=15, style='b')
+    total_p_str = f"The total price is {x}."
+    pdf.cell(w=50, h=8, txt=total_p_str, align='L', ln=1)
+
+    # PythonHow section
+    pdf.cell(w=30, h=8, txt="PythonHow", style='b', align='L')
+    pdf.image("pythonhow.png", w=10)
+
+
+
+
+
+
+
     pdf.output(f"PDFs/{filename}.pdf")
