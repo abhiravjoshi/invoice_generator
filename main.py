@@ -20,9 +20,34 @@ for filepath in file_list:
 
     pdf.cell(w=50, h=8, txt=invoice_str, align='L', ln=1)
     # pdf.ln(10)
-    pdf.cell(w=50, h=8, txt=date_str, align='L')
+    pdf.cell(w=50, h=8, txt=date_str, align='L', ln=2)
 
     df = pd.read_excel(filepath, sheet_name="Sheet 1")
-    dfs.append(df)
+
+    column_list = df.columns
+
+    # Add header for table
+    pdf.set_font(family='Times', size=10, style='b')
+    pdf.set_text_color(80, 80, 80)
+    widths = [30, 65, 35, 30, 30]
+    for i, column in enumerate(column_list):
+        column = column.replace('_', ' ')
+        column = column.title()
+        if i == len(column_list)-1:
+            pdf.cell(w=widths[i], h=8, txt=column, border=1, ln=1)
+        else:
+            pdf.cell(w=widths[i], h=8, txt=column, border=1)
+
+    # Add rows to table
+    for index, row in df.iterrows():
+        pdf.set_font(family='Times', size=10)
+        pdf.set_text_color(80, 80, 80)
+        for i, column in enumerate(column_list):
+            if i == len(column_list) - 1:
+                pdf.cell(w=widths[i], h=8,
+                         txt=str(row[column_list[i]]), border=1, ln=1)
+            else:
+                pdf.cell(w=widths[i], h=8,
+                         txt=str(row[column_list[i]]), border=1)
 
     pdf.output(f"PDFs/{filename}.pdf")
