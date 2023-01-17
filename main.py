@@ -63,7 +63,7 @@ for filepath in file_list:
     pdf.cell(w=50, h=8, txt=total_p_str, align='L', ln=1)
 
     # PythonHow section
-    pdf.cell(w=30, h=8, txt="PythonHow", style='b', align='L')
+    pdf.cell(w=30, h=8, txt="PythonHow", align='L')
     pdf.image("pythonhow.png", w=10)
 
 
